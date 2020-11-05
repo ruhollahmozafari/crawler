@@ -18,11 +18,14 @@ def requester(url):# gets a URL and send request and returnt the html as string
 
 
 def keyword_finder(html,substring):
-    matches = re.finditer(substring,html)
-    matches_positions = [match.start() for match in matches]
-    df = pd.DataFrame(matches_positions, columns=["indexs"])  # saving data into csv file using pandas 
+    lent=len(substring)
+    lst=[]
+    for counter in range(0, len(html)):
+        if html[counter:counter+lent] == substring:
+            lst.append(counter)
+    df = pd.DataFrame(lst, columns=["indexs"])  # saving data into csv file using pandas 
     df.to_csv('keyword result.csv', index=False)
-    return matches_positions
+    return lst
 
 
 
@@ -76,10 +79,11 @@ def image_saver(url):
         return image_src
 
 
-# karademy=requester('https://karademy.ir/')
+karademy=requester('https://karademy.ir/')
 # word_finder=keyword_finder(karademy,'python')
-# test_keyword_finder=keyword_finder(karademy,'python')
+test_keyword_finder=keyword_finder(karademy,'python')
+print(test_keyword_finder)
 # f=tag_finder(karademy)
-# # lnks=link_finder("https://karademy.ir")
+# lnks=link_finder("https://douryaad.ir/")
 # pic= image_saver(url="https://www.reddit.com/r/cats")
 # print(pic)
